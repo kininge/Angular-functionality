@@ -1,0 +1,44 @@
+
+<div class="total-container">
+
+    <!-- Search box container -->
+    <div class="search-box-container" 
+        [ngStyle]="{'border-bottom-left-radius': searchResults.length== 0? '25px': '0px', 
+        'border-bottom-right-radius': searchResults.length== 0? '25px': '0px'}">
+
+        
+        <!-- Search box -->
+        <div class="input-group">
+            <span><i class="fa fa-search our-icon"></i></span>
+            <input 
+                #searchBox
+                type="text" 
+                class="form-control searchBox" 
+                placeholder="What is your project name?" 
+                [(ngModel)]="projectName"
+                [ngStyle]="{'border-bottom-left-radius': searchResults.length== 0? '25px': '0px', 
+                'border-bottom-right-radius': searchResults.length== 0? '25px': '0px'}"
+                (keyup)="search(searchBox.value)"
+            />
+        </div>
+        <!-- Search box -->
+
+    </div>
+    <!-- Search box container -->
+
+    <!-- Search intelligence -->
+    <div class="search-results" *ngIf="searchResults.length> 0">
+        <ul>  
+            <li class="link" *ngFor="let result of searchResults" (click)="onSelectSearchResult(result)"> 
+                <i class="fa fa-search our-icon-2"></i> 
+                {{ result.projectName }} 
+            </li>             
+        </ul>  
+    </div>  
+    <!-- Search intelligence -->
+
+</div>
+
+
+
+
