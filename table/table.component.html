@@ -1,0 +1,97 @@
+<!-- filter -->
+    <div class="background-highlight" *ngIf="table.searchBox" >
+        <div style="padding: 15px 10px 10px 10px; display: flex">
+
+            <!-- Search filter -->
+            <div style="display: flex; width: 70%; margin-right: 12%;">
+                <span style="width: 24px; height: 38px; padding: 7px; background-color: white; text-align: center; border-radius: 10px 0px 0px 10px;">
+                    <i class="fa fa-search highlight" aria-hidden="true"></i>
+                </span>
+                <input style="border-radius: 0px 10px 10px 0px;" class="form-control field" placeholder="Search..." (keyup)="applyFilter($event)" />  
+            </div> 
+            <!-- Search filter -->
+
+            <!-- Records on each page -->
+            <div style="padding-top: 3px;">
+                <input class="field recordsOnEachPage" style="width: 25px; brackground-color: transparant; margin-right: 5px;" [(ngModel)]="elementsOnPage" (keyup)="alterPageSize($event)" />
+                <label><strong> records on each page</strong></label>
+            </div>
+            <!-- Records on each page -->
+
+        </div>
+    </div>
+<!-- filter -->
+<!-- Table--> 
+    <table class="table table-hover" [ngStyle]="{'margin-bottom': table.pagination? '0px': '10%'}">
+        <!-- Column titles -->
+        <thead>
+            <tr class="background-highlight">
+                <th scope="col" *ngIf="table.serialNumber">#</th>
+                <th *ngFor="let title of table.tableLabels" scope="col">{{ title }}</th>
+                <th scope="col" *ngIf="table.removeButton">-</th>
+            </tr>
+        </thead>
+        <!-- Column titles -->
+        <!-- Data -->
+        <tbody>
+            <tr *ngFor="let data of presentedData; let ind= index;">
+                <th style="vertical-align: middle;" scope="row" *ngIf="table.serialNumber" >
+                    {{ recordFrom+ ind }}
+                </th>
+                <td style="vertical-align: middle;">{{ data.year}}</td>
+                <td style="vertical-align: middle;">{{ data.physics }}</td>
+                <td style="vertical-align: middle;">{{ data.chemistry }}</td>
+                <td style="vertical-align: middle;">{{ data.physiologyOrMedicine }}</td>
+                <td style="vertical-align: middle;">{{ data.literature }}</td>
+                <td style="vertical-align: middle;">{{ data.peace }}</td>
+                <td style="vertical-align: middle;">{{ data.economics }}</td>
+                <td style="vertical-align: middle;" *ngIf="table.removeButton">
+                    <button 
+                        class="btn danger" 
+                        style="border-radius: 50%; width: 30px; height: 30px; padding: 2px;"
+                        (click)="removeApplication(ind)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <!-- Data -->
+    </table> 
+<!-- Table-->  
+<!-- Pagination -->
+    <div class="background-highlight" style="margin-bottom: 50px; display: flex; padding: 10px 20px;" *ngIf="table.pagination">
+
+        <!-- Records representation -->
+        <div style="display: flex; height: 38px; padding: 7px; margin-left: 70%;">
+            <p>
+                <strong style="color: white;">
+                    <span>{{ recordFrom }}</span>&nbsp;-&nbsp;
+                    <span>{{ recordTill }}</span>&nbsp;&nbsp;&nbsp;of&nbsp;&nbsp;
+                    <span *ngIf="filtring">{{ filteredData.length }}</span>
+                    <span *ngIf="!filtring">{{ table.tableData.length }}</span>
+                </strong>
+            </p>
+        </div>
+        <!-- Records representation -->
+
+        <!-- navigation -->
+        <div style="display: flex; margin-left: 75px;">
+            <button 
+                [ngStyle]="{'color': previousRecordsStatus('color')}"
+                class="btn-ripple navigation-button"
+                (click)="previousRecords()"
+                [disabled]="previousRecordsStatus('disabled')">
+                <i class="fa fa-angle-left" aria-hidden="true" ></i>
+            </button>
+            <button 
+                [ngStyle]="{'color': nextRecordsStatus('color')}"
+                class="btn-ripple navigation-button"
+                (click)="nextRecords()"
+                [disabled]="nextRecordsStatus('disabled')">
+                <i class="fa fa-angle-right" aria-hidden="true" ></i>
+            </button>
+        </div>
+        <!-- navigation -->
+
+    </div>
+<!-- Pagination -->
